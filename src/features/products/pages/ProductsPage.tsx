@@ -1,8 +1,59 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { ProductCard } from "../../../components/ProductCard";
 import { useProducts } from "../hooks/useProducts";
+import type { Product } from "../types/product";
+
+function getProductCategory(product: Product) {
+  const name = product.name.toLowerCase();
+
+  if (
+    name.includes("baldur") ||
+    name.includes("hollow") ||
+    name.includes("red dead") ||
+    name.includes("stardew") ||
+    name.includes("elden") ||
+    name.includes("cyberpunk")
+  ) {
+    return "Games";
+  }
+
+  if (name.includes("controller")) {
+    return "Controllers";
+  }
+
+  if (name.includes("headset") || name.includes("keyboard")) {
+    return "Accessories";
+  }
+
+  if (name.includes("gift card")) {
+    return "Gift Cards";
+  }
+
+  return "Other";
+}
 
 export function ProductsPage() {
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
   const { data: products, isLoading, isError, error } = useProducts();
+
+  const categories = Array.from(
+    new Set(products?.map((product) => getProductCategory(product)) || []),
+  );
+
+  const filteredProducts = products?.filter((product) => {
+    const matchesSearch = product.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const productCategory = getProductCategory(product);
+
+    const matchesCategory =
+      selectedCategory === "all" || productCategory === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
 
   if (isLoading) {
     return (
@@ -26,21 +77,40 @@ export function ProductsPage() {
     <main>
       <h1>Products</h1>
 
-      {products?.length === 0 && <p>No products found.</p>}
+      <div>
+        <label htmlFor="search"></label>
+        <input
+          type="text"
+          id="search"
+          placeholder="Search products..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
 
-      <ul>
-        {products?.map((product) => (
-          <li key={product.id}>
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            <p>
-              {product.price_cents} {product.currency}
-            </p>
-            <p>Stock: {product.stock_quantity}</p>
-            <Link to={`/products/${product.id}`}>View product</Link>
-          </li>
+      <div>
+        <label htmlFor="category">Filter by category</label>
+        <select
+          id="category"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="all">All categories</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {filteredProducts?.length === 0 && <p>No products found.</p>}
+
+      <section>
+        {filteredProducts?.map((product) => (
+          <ProductCard key={product.id} product={product} />
         ))}
-      </ul>
+      </section>
     </main>
   );
 }
