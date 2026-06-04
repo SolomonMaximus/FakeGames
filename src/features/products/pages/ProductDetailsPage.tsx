@@ -1,9 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
+import { useCartStore } from "../../cart/store/cartStore";
 
 export function ProductDetailsPage() {
   const { id } = useParams();
   const { data: product, isLoading, isError, error } = useProduct(id);
+  const addToCart = useCartStore((state) => state.addToCart);
 
   if (isLoading) {
     return (
@@ -45,7 +47,7 @@ export function ProductDetailsPage() {
 
       <p>Stock: {product.stock_quantity}</p>
 
-      <button>Add to cart</button>
+      <button onClick={() => addToCart(product)}>Add to cart</button>
     </main>
   );
 }
