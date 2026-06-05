@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { calculateCartItemCount, calculateCartTotal } from "../utils/cartUtils";
 import type { Product } from "../../products/types/product";
 
 export type CartItem = {
@@ -64,13 +65,10 @@ export const useCartStore = create<CartState>((set, get) => ({
   },
 
   getTotalPrice: () => {
-    return get().items.reduce(
-      (total, item) => total + item.product.price_cents * item.quantity,
-      0,
-    );
+    return calculateCartTotal(get().items);
   },
 
   getTotalItems: () => {
-    return get().items.reduce((total, item) => total + item.quantity, 0);
+    return calculateCartItemCount(get().items);
   },
 }));

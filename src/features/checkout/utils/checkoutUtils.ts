@@ -26,5 +26,5 @@ export function validateCheckoutForm(form: CheckoutForm) {
 }
 
 export function createFakeOrderNumber() {
-  return `${Math.floor(100000 + Math.random() * 900000)}`;
+  return `FG-${Math.floor(100000 + Math.random() * 900000)}`;
 }
