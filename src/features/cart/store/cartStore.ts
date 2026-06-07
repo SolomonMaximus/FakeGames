@@ -25,6 +25,10 @@ export const useCartStore = create<CartState>((set, get) => ({
     const existingItem = items.find((item) => item.product.id === product.id);
 
     if (existingItem) {
+      if (existingItem.quantity >= product.stock_quantity) {
+        return;
+      }
+
       set({
         items: items.map((item) =>
           item.product.id === product.id
@@ -36,11 +40,14 @@ export const useCartStore = create<CartState>((set, get) => ({
       return;
     }
 
+    if (product.stock_quantity <= 0) {
+      return;
+    }
+
     set({
       items: [...items, { product, quantity: 1 }],
     });
   },
-
   removeFromCart: (productId) => {
     set({
       items: get().items.filter((item) => item.product.id !== productId),
@@ -54,9 +61,15 @@ export const useCartStore = create<CartState>((set, get) => ({
     }
 
     set({
-      items: get().items.map((item) =>
-        item.product.id === productId ? { ...item, quantity } : item,
-      ),
+      items: get().items.map((item) => {
+        if (item.product.id !== productId) {
+          return item;
+        }
+
+        const safeQuantity = Math.min(quantity, item.product.stock_quantity);
+
+        return { ...item, quantity: safeQuantity };
+      }),
     });
   },
 

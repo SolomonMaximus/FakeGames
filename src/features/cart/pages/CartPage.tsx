@@ -36,11 +36,13 @@ export function CartPage() {
               id={`quantity-${item.product.id}`}
               type="number"
               min="1"
+              max={item.product.stock_quantity}
               value={item.quantity}
               onChange={(event) =>
                 updateQuantity(item.product.id, Number(event.target.value))
               }
             />
+            <p>Available stock: {item.product.stock_quantity}</p>
 
             <p>
               Subtotal: {item.product.price_cents * item.quantity}{" "}

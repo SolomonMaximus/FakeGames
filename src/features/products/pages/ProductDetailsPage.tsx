@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
 import { useCartStore } from "../../cart/store/cartStore";
@@ -5,7 +6,11 @@ import { useCartStore } from "../../cart/store/cartStore";
 export function ProductDetailsPage() {
   const { id } = useParams();
   const { data: product, isLoading, isError, error } = useProduct(id);
+
+  const items = useCartStore((state) => state.items);
   const addToCart = useCartStore((state) => state.addToCart);
+
+  const [cartMessage, setCartMessage] = useState("");
 
   if (isLoading) {
     return (
@@ -33,6 +38,29 @@ export function ProductDetailsPage() {
     );
   }
 
+  const cartItem = items.find((item) => item.product.id === product.id);
+  const quantityInCart = cartItem ? cartItem.quantity : 0;
+  const isOutOfStock = product.stock_quantity <= 0;
+  const hasReachedStockLimit = quantityInCart >= product.stock_quantity;
+
+  function handleAddToCart() {
+    if (!product) {
+      setCartMessage("Product not found.");
+      return;
+    }
+    if (isOutOfStock) {
+      return;
+    }
+
+    if (hasReachedStockLimit) {
+      setCartMessage("You have reached the maximum quantity for this product.");
+      return;
+    }
+
+    addToCart(product);
+    setCartMessage("Product added to cart!");
+  }
+
   return (
     <main>
       <Link to="/products">Back to products</Link>
@@ -47,7 +75,17 @@ export function ProductDetailsPage() {
 
       <p>Stock: {product.stock_quantity}</p>
 
-      <button onClick={() => addToCart(product)}>Add to cart</button>
+      <p> In Cart: {quantityInCart}</p>
+
+      <button
+        type="button"
+        onClick={handleAddToCart}
+        disabled={isOutOfStock || hasReachedStockLimit}
+      >
+        Add to cart
+      </button>
+
+      {cartMessage && <p>{cartMessage}</p>}
     </main>
   );
 }

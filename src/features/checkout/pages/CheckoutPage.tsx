@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCartStore } from "../../cart/store/cartStore";
+import { reduceStocckAfterCheckout } from "../api/checkoutApi";
 import {
   createFakeOrderNumber,
   validateCheckoutForm,
@@ -21,10 +22,12 @@ export function CheckoutPage() {
     paymentMethod: "fake-card",
   });
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+
+    setError("");
 
     if (items.length === 0) {
       setError("Your cart is empty");
@@ -32,17 +35,26 @@ export function CheckoutPage() {
     }
 
     const validationError = validateCheckoutForm(form);
-
     if (validationError) {
       setError(validationError);
       return;
     }
 
-    const orderNumber = createFakeOrderNumber();
+    try {
+      await reduceStocckAfterCheckout(items);
 
-    clearCart();
+      const orderNumber = createFakeOrderNumber();
 
-    navigate(`/order-success?order=${orderNumber}`);
+      clearCart();
+
+      navigate(`/checkout/success?orderNumber=${orderNumber}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Something went wrong during checkout");
+      }
+    }
   }
 
   return (
