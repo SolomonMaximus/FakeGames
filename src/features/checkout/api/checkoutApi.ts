@@ -1,4 +1,4 @@
-import supabase from "../../../lib/supabaseClient";
+import { supabase } from "../../../lib/supabase";
 import type { CartItem } from "../../cart/store/cartStore";
 
 const SHOP_ID = "3c9a5243-6ec2-4b19-82f1-d63b7830a608";

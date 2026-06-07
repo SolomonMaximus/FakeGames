@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCartStore } from "../../cart/store/cartStore";
-import { reduceStocckAfterCheckout } from "../api/checkoutApi";
+import { reduceStockAfterCheckout } from "../api/checkoutApi";
 import {
   createFakeOrderNumber,
   validateCheckoutForm,
@@ -41,7 +41,7 @@ export function CheckoutPage() {
     }
 
     try {
-      await reduceStocckAfterCheckout(items);
+      await reduceStockAfterCheckout(items);
 
       const orderNumber = createFakeOrderNumber();
 

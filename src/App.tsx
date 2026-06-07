@@ -3,10 +3,12 @@ import { Navbar } from "./components/Navbar";
 
 function App() {
   return (
-    <main>
+    <>
       <Navbar />
-      <Outlet />
-    </main>
+      <div className="page-container">
+        <Outlet />
+      </div>
+    </>
   );
 }
 
