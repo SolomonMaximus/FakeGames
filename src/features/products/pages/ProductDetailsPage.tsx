@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { getProductImage } from "../utils/productImages";
 import { useProduct } from "../hooks/useProduct";
 import { useCartStore } from "../../cart/store/cartStore";
 
@@ -38,6 +39,7 @@ export function ProductDetailsPage() {
     );
   }
 
+  const productImage = getProductImage(product);
   const cartItem = items.find((item) => item.product.id === product.id);
   const quantityInCart = cartItem ? cartItem.quantity : 0;
   const isOutOfStock = product.stock_quantity <= 0;
@@ -68,6 +70,11 @@ export function ProductDetailsPage() {
       </Link>
       <section className="product-details-card">
         <div>
+          <img
+            className="product-details-image"
+            src={productImage}
+            alt={product.name}
+          />
           <p className="product-details-label">Product details</p>
 
           <h1>{product.name}</h1>
