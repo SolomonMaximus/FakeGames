@@ -63,29 +63,38 @@ export function ProductDetailsPage() {
 
   return (
     <main>
-      <Link to="/products">Back to products</Link>
+      <Link className="back-link" to="/products">
+        ← Back to products
+      </Link>
+      <section className="product-details-card">
+        <div>
+          <p className="product-details-label">Product details</p>
 
-      <h1>{product.name}</h1>
+          <h1>{product.name}</h1>
 
-      <p>{product.description}</p>
+          <p className="product-details-description">{product.description}</p>
+        </div>
 
-      <p>
-        Price: {product.price_cents} {product.currency}
-      </p>
+        <div className="product-details-info">
+          <p className="product-details-price">
+            {product.price_cents} {product.currency}
+          </p>
 
-      <p>Stock: {product.stock_quantity}</p>
+          <p>Stock: {product.stock_quantity}</p>
 
-      <p> In Cart: {quantityInCart}</p>
+          <p>In cart: {quantityInCart}</p>
 
-      <button
-        type="button"
-        onClick={handleAddToCart}
-        disabled={isOutOfStock || hasReachedStockLimit}
-      >
-        Add to cart
-      </button>
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            disabled={isOutOfStock || hasReachedStockLimit}
+          >
+            Add to cart
+          </button>
 
-      {cartMessage && <p>{cartMessage}</p>}
+          {cartMessage && <p className="success-message">{cartMessage}</p>}
+        </div>
+      </section>
     </main>
   );
 }

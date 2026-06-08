@@ -32,40 +32,50 @@ export function RegisterPage() {
 
   return (
     <main>
-      <h1>Register</h1>
+      <section className="form-card">
+        <h1>Register</h1>
 
-      <form onSubmit={handleRegister}>
-        <div>
-          <label htmlFor="register-email">Email</label>
-          <input
-            id="register-email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
+        <p className="muted">Create an account</p>
 
-        <div>
-          <label htmlFor="register-password">Password</label>
-          <input
-            id="register-password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
+        {message && <p className="success-message">{message}</p>}
+        {error && <p className="error-message">{error}</p>}
 
-        <button type="submit">Create account</button>
-      </form>
+        <form className="form-layout" onSubmit={handleRegister}>
+          <div>
+            <label htmlFor="register-email">Email</label>
+            <input
+              id="register-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
 
-      {message && <p>{message}</p>}
-      {error && <p>{error}</p>}
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
 
-      {!message && (
-        <p>
-          Already have an account? <Link to="/login">Log in</Link>
-        </p>
-      )}
+          <button type="submit">Create account</button>
+        </form>
+
+        {!message && (
+          <p className="auth-link-text">
+            Already have an account? <Link to="/login">Log in</Link>
+          </p>
+        )}
+
+        {message && (
+          <p>
+            Account created <Link to="/login">Log in</Link>
+          </p>
+        )}
+      </section>
     </main>
   );
 }

@@ -30,37 +30,41 @@ export function LoginPage() {
 
   return (
     <main>
-      <h1>Login</h1>
+      <section className="form-card">
+        <h1>Login</h1>
 
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="login-email">Email</label>
-          <input
-            id="login-email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
+        <p className="muted">Log in to your account</p>
 
-        <div>
-          <label htmlFor="login-password">Password</label>
-          <input
-            id="login-password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
+        {error && <p className="error-message">{error}</p>}
 
-        <button type="submit">Log in</button>
-      </form>
+        <form onSubmit={handleLogin}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
 
-      {error && <p>{error}</p>}
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
 
-      <p>
-        No account yet? <Link to="/register">Register</Link>
-      </p>
+          <button type="submit">Log in</button>
+        </form>
+
+        <p className="auth-link-text">
+          No account yet? <Link to="/register">Create one</Link>
+        </p>
+      </section>
     </main>
   );
 }

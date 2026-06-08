@@ -47,7 +47,7 @@ export function CheckoutPage() {
 
       clearCart();
 
-      navigate(`/checkout/success?orderNumber=${orderNumber}`);
+      navigate(`/order-success?order=${orderNumber}`);
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -59,68 +59,72 @@ export function CheckoutPage() {
 
   return (
     <main>
-      <h1>Checkout</h1>
+      <section className="form-card">
+        <h1>Checkout</h1>
 
-      <p>This is a fake checkout. No real payment will be taken.</p>
+        <p className="muted">
+          This is a fake checkout. No real payment will be taken.
+        </p>
 
-      {error && <p>{error}</p>}
+        {error && <p className="error-message">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="fullName">Full name</label>
-          <input
-            id="fullName"
-            type="text"
-            value={form.fullName}
-            onChange={(event) =>
-              setForm({ ...form, fullName: event.target.value })
-            }
-          />
-        </div>
+        <form className="form-layout" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="fullName">Full name</label>
+            <input
+              id="fullName"
+              type="text"
+              value={form.fullName}
+              onChange={(event) =>
+                setForm({ ...form, fullName: event.target.value })
+              }
+            />
+          </div>
 
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            value={form.email}
-            onChange={(event) =>
-              setForm({ ...form, email: event.target.value })
-            }
-          />
-        </div>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={form.email}
+              onChange={(event) =>
+                setForm({ ...form, email: event.target.value })
+              }
+            />
+          </div>
 
-        <div>
-          <label htmlFor="address">Address</label>
-          <input
-            id="address"
-            type="text"
-            value={form.address}
-            onChange={(event) =>
-              setForm({ ...form, address: event.target.value })
-            }
-          />
-        </div>
+          <div>
+            <label htmlFor="address">Address</label>
+            <input
+              id="address"
+              type="text"
+              value={form.address}
+              onChange={(event) =>
+                setForm({ ...form, address: event.target.value })
+              }
+            />
+          </div>
 
-        <div>
-          <label htmlFor="paymentMethod">Fake payment method</label>
-          <select
-            id="paymentMethod"
-            value={form.paymentMethod}
-            onChange={(event) =>
-              setForm({ ...form, paymentMethod: event.target.value })
-            }
-          >
-            <option value="fake-card">Fake card</option>
-            <option value="cash-on-delivery">Cash on delivery</option>
-            <option value="gift-card">Gift card</option>
-          </select>
-        </div>
+          <div>
+            <label htmlFor="paymentMethod">Fake payment method</label>
+            <select
+              id="paymentMethod"
+              value={form.paymentMethod}
+              onChange={(event) =>
+                setForm({ ...form, paymentMethod: event.target.value })
+              }
+            >
+              <option value="fake-card">Fake card</option>
+              <option value="cash-on-delivery">Cash on delivery</option>
+              <option value="gift-card">Gift card</option>
+            </select>
+          </div>
 
-        <p>Total: {totalPrice} ISK</p>
+          <p className="product-price">Total: {totalPrice} ISK</p>
 
-        <button type="submit">Place fake order</button>
-      </form>
+          <button type="submit">Place fake order</button>
+        </form>
+      </section>
     </main>
   );
 }

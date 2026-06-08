@@ -7,18 +7,16 @@ type ProductCardProps = {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <article>
-      <h2>{product.name}</h2>
-
-      <p>{product.description}</p>
-
-      <p>
-        {product.price_cents} {product.currency}
-      </p>
-
-      <p>Stock: {product.stock_quantity}</p>
-
-      <Link to={`/products/${product.id}`}>View product</Link>
-    </article>
+    <Link className="product-card" to={`/products/${product.id}`}>
+      <article>
+        <h2>{product.name}</h2>
+        <p className="product-description">{product.description}</p>
+        <p className="products-price">
+          {product.price_cents} {product.currency}
+        </p>
+        <p className="product-stock">Stock: {product.stock_quantity}</p>
+        <span className="product-link"></span>
+      </article>
+    </Link>
   );
 }

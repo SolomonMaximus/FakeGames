@@ -33,22 +33,30 @@ export function Navbar() {
   }
 
   return (
-    <header>
-      <nav>
-        <Link to="/">FakeGames</Link> <Link to="/products">Products</Link>{" "}
-        <Link to="/cart">Cart ({totalItems})</Link>{" "}
-        {user ? (
-          <>
-            <span>{user.email}</span>{" "}
-            <button type="button" onClick={handleLogout}>
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/login">Login</Link> <Link to="/register">Register</Link>
-          </>
-        )}
+    <header className="navbar">
+      <nav className="navbar-content">
+        <Link className="navbar-logo" to="/">
+          <span className="logo-icon">FG</span>
+        </Link>
+
+        <div className="navbar-links">
+          <Link to="/products">Products</Link>
+          <Link to="/cart">Cart ({totalItems})</Link>
+
+          {user ? (
+            <>
+              <span className="navbar-user">Hello, {user.email}</span>
+              <button type="button" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          )}
+        </div>
       </nav>
     </header>
   );

@@ -77,36 +77,39 @@ export function ProductsPage() {
     <main>
       <h1>Products</h1>
 
-      <div>
-        <label htmlFor="search"></label>
-        <input
-          type="text"
-          id="search"
-          placeholder="Search products..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
+      <div className="product-controls">
+        <div>
+          <label htmlFor="search">Search products</label>
+          <input
+            id="search"
+            type="text"
+            placeholder="Search products..."
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="category">Filter by category</label>
-        <select
-          id="category"
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          <option value="all">All categories</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        <div>
+          <label htmlFor="category">Filter by category</label>
+          <select
+            id="category"
+            value={selectedCategory}
+            onChange={(event) => setSelectedCategory(event.target.value)}
+          >
+            <option value="all">All categories</option>
+
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {filteredProducts?.length === 0 && <p>No products found.</p>}
 
-      <section>
+      <section className="product-grid">
         {filteredProducts?.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

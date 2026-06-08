@@ -6,13 +6,17 @@ export function OrderSuccessPage() {
 
   return (
     <main>
-      <h1>Order confirmed</h1>
+      <section className="form-card">
+        <h1>Order confirmed</h1>
 
-      <p>Your fake order has been completed.</p>
+        <p className="success-message">Your fake order has been completed.</p>
 
-      {orderNumber && <p>Order number: {orderNumber}</p>}
+        {orderNumber && <p>Order number: {orderNumber}</p>}
 
-      <Link to="/products">Continue shopping</Link>
+        <Link className="primary-link" to="/products">
+          Continue shopping
+        </Link>
+      </section>
     </main>
   );
 }
