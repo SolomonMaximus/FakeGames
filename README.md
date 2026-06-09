@@ -1,73 +1,80 @@
-# React + TypeScript + Vite
+# FakeGames
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FakeGames is a fake online gaming shop built with React, TypeScript, Vite, and Supabase.
 
-Currently, two official plugins are available:
+The website lets users browse products, search and filter products, open product details, add products to a cart, and complete a fake checkout. No real payments are taken.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live website
 
-## React Compiler
+https://project-jz4q1-oa7y1nhcy-solon-s-projects1.vercel.app/
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## GitHub repository
 
-## Expanding the ESLint configuration
+https://github.com/SolomonMaximus/FakeGames
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Homepage with featured products
+- Product list from Supabase
+- Product details page
+- Product search
+- Category filtering
+- Product images
+- Shopping cart
+- Quantity changes and remove from cart
+- Fake checkout
+- Order confirmation page
+- Stock updates after checkout
+- Register and login with Supabase Auth
+- Responsive layout
+- Tests for cart and checkout logic
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Technologies used
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- React
+- TypeScript
+- Vite
+- React Router
+- Supabase
+- TanStack React Query
+- Zustand
+- Vitest
+- CSS
+- Vercel
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## How to run locally
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Clone the project:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+--------git clone https://github.com/SolomonMaximus/FakeGames--------
+
+Go into the project folder:
+
+-----cd FakeGames-----
+
+Install dependencies:
+
+---npm install---
+
+Create a `.env` file in the project root:
+
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+
+Start the project:
+
+-npm run dev-
+
+## Tests
+
+Run tests:
+
+-- npm run test
+
+Build the project:
+
+--npm run build
+
+## Author
+
+Sólon Örn
