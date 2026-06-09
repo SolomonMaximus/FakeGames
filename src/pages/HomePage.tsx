@@ -1,13 +1,26 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import { ProductCard } from "../components/ProductCard";
+import { useProducts } from "../features/products/hooks/useProducts";
 
 export function HomePage() {
+  const { data: products, isLoading } = useProducts();
+
+  const featuredProducts = useMemo(() => {
+    if (!products) {
+      return [];
+    }
+
+    return [...products].sort(() => Math.random() - 0.5).slice(0, 3);
+  }, [products]);
+
   return (
     <main className="home-page">
       <section className="home-card">
         <div>
           <p className="home-label">Welcome to FakeGames!</p>
 
-          <h1>Games, accesories and more in one place!</h1>
+          <h1>Games, accessories and more in one place!</h1>
 
           <p className="home-description">
             Explore our wide selection of games, accessories, and more. We have
@@ -32,21 +45,19 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="home-features">
-        <article className="home-feature">
-          <h2>Shop products</h2>
-          <p>Search and filter games, accessories, and gift cards.</p>
-        </article>
+      <section>
+        <div className="section-header">
+          <h2>Featured Products</h2>
+          <Link to="/products">View all products</Link>
+        </div>
 
-        <article className="home-feature">
-          <h2>Use the cart</h2>
-          <p>Add products, change quantities, and remove items.</p>
-        </article>
+        {isLoading && <p>Loading featured products...</p>}
 
-        <article className="home-feature">
-          <h2>Fake checkout</h2>
-          <p>Place a fake order</p>
-        </article>
+        <div className="home-featured-products">
+          {featuredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </section>
 
       <section className="home-categories">
