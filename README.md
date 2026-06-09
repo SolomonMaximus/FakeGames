@@ -24,6 +24,7 @@ https://github.com/SolomonMaximus/FakeGames
 - Quantity changes and remove from cart
 - Fake checkout
 - Order confirmation page
+- Stock updates after checkout
 - Register and login with Supabase Auth
 - Responsive layout
 - Tests for cart and checkout logic
