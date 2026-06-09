@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ProductCard } from "../../../components/ProductCard";
 import { useProducts } from "../hooks/useProducts";
 import type { Product } from "../types/product";
@@ -33,8 +34,13 @@ function getProductCategory(product: Product) {
 }
 
 export function ProductsPage() {
+  const [searchParams] = useSearchParams();
+  const categoryFromUrl = searchParams.get("category");
+
   const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryFromUrl ?? "all",
+  );
 
   const { data: products, isLoading, isError, error } = useProducts();
 
